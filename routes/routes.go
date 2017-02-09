@@ -109,6 +109,32 @@ func GetAllReleases(c echo.Context) error {
 		Roles       models.Roles
 	}{Destination, results, time.Now(), "ALL", getUserRole(c, cookie.Value)})
 }
+func GetAllDCReleases(c echo.Context) error {
+	Destination := c.FormValue("dest")
+	Db := db.MgoDb{}
+	Db.Init()
+	defer Db.Close()
+	col := Db.C("release")
+	//find based on the criteria of the query
+	var results []models.Release
+	valid := http.StatusOK
+	if err := col.Find(bson.M{}).All(&results); err != nil {
+		valid = http.StatusNoContent
+		fmt.Println("NOK releases Not found")
+	} else {
+		valid = http.StatusOK
+		fmt.Println("OK Releases found", results)
+	}
+	cookie, _ := c.Cookie("username")
+	fmt.Println("cookie", cookie.Value, getUserRole(c, cookie.Value))
+	return c.Render(valid, "releases", struct {
+		Destination string
+		Results     []models.Release
+		Date        time.Time
+		AllReleases string
+		Roles       models.Roles
+	}{Destination, results, time.Now(), "ALL", getUserRole(c, cookie.Value)})
+}
 func GetValidReleases(c echo.Context) error {
 	Destination := c.FormValue("dest")
 	Db := db.MgoDb{}

@@ -10,10 +10,12 @@
 
 <H2 >	Datacenter Target : {{.Destination}} (<b> {{len .Results}}</b> releases) </H2>
 <table style="width:50%" border =2>
-<tr><th>Service</th><th>Version</th><th>Released ?</th><th>ZipURL</th><th>CentralImgURL</th><th>LocImgURL</th><th>Date</th></tr>
+<tr><th>DC</th><th>Service</th><th>Version</th><th>Released ?</th><th>ZipURL</th><th>CentralImgURL</th><th>LocImgURL</th><th>Date</th></tr>
 {{$toto := .Roles.RmRole}}
 {{range $key, $release := .Results}}
-<tr><td align="center">{{$release.ServiceName}} </td>
+<tr>
+    <td align="center">{{$release.Destination}} </td>
+    <td align="center">{{$release.ServiceName}} </td>
     <td align="center"> {{$release.ServiceVersion}}</td>
     <td align="center"> {{if $release.ReleaseStatus}}YES{{else}}NO
       {{if $toto}}

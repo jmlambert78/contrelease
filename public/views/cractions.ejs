@@ -79,6 +79,9 @@ ul.tab li a:focus, .active {
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'ReleasesDC')">Releases for DC</a></li>
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'ManageDC')">Manage DC</a></li>
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'ManageUsers')">Manage Users</a></li>
+  {{if .Roles.SuperAdmRole}}
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'SuperAdmin')">SuperADM Panel</a></li>
+  {{end}}
 </ul>
 
 <div id="Publish" class="tabcontent">
@@ -115,9 +118,8 @@ ul.tab li a:focus, .active {
 	<H3>List all RELEASED services for your Target </H3>
   <iframe width="100%" height="400" src="/getvalidreleases?dest={{.Roles.DC}}" frameborder="2" ></iframe>
 	<H3>Get the shell script allowing the download of all RELEASED services for your Target </H3>
-
-
 </div>
+
 <div id="ManageDC" class="tabcontent">
 	<p>Here the principle is that in case no local image or repo path is provided,
 	<p>the application will replace the dockerhub.gemalto.com:xxx by the default value of the local registry within the generated scripts.(but will not update the ZIP content)
@@ -129,7 +131,12 @@ ul.tab li a:focus, .active {
 	<p>Each user may have several roles on a DC,
 	<p>Only the superadmin has access to all DCs and can modify the roles.
   <iframe width="100%" height="400" src="/manageroles" frameborder="2" ></iframe>
+</div>
 
+<div id="SuperAdmin" class="tabcontent">
+	<H3>List all available services for ALL Targets (as Superadmin) </H3>
+  <iframe width="100%" height="400" src="/getalldcsreleases" frameborder="2" ></iframe>
+	<H3>Get the shell script allowing the download of all RELEASED services for your Target </H3>
 </div>
 <script>
 function openCity(evt, cityName) {

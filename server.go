@@ -31,6 +31,8 @@ func main() {
 	e.GET("/addnewrelease", routes.AddNewRelease)
 	e.POST("/newrelease", routes.NewRelease)
 	e.GET("/getallreleases", routes.GetAllReleases)
+	e.GET("/getalldcsreleases", routes.GetAllDCReleases)
+
 	e.GET("/getvalidreleases", routes.GetValidReleases)
 	e.GET("/validrm", routes.ValidateRelease)
 	e.GET("/getscript", routes.GetScript)
