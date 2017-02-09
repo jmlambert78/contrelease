@@ -7,9 +7,9 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/jmlambert78/ContinuousRelease/db"
-	"github.com/jmlambert78/ContinuousRelease/libs"
-	"github.com/jmlambert78/ContinuousRelease/models"
+	"github.com/jmlambert78/contrelease/db"
+	"github.com/jmlambert78/contrelease/libs"
+	"github.com/jmlambert78/contrelease/models"
 
 	"github.com/labstack/echo"
 )
