@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/jmlambert78/ContinuousRelease/db"
-	"github.com/jmlambert78/ContinuousRelease/routes"
-	"github.com/jmlambert78/ContinuousRelease/views"
+	"github.com/jmlambert78/contrelease/db"
+	"github.com/jmlambert78/contrelease/routes"
+	"github.com/jmlambert78/contrelease/views"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
