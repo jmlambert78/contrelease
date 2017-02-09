@@ -1,0 +1,36 @@
+{{define "updateuserrole"}}
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title> Update User role </title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+	<div class="centre">
+		<h2>Please enter Roles informations : </h2>
+		<form method="get" action="/validateuserrole">
+			<p>
+				<label for="name">Login :</label>
+				<input type="text" name="name" value="{{.Roles.UserName}}"/>
+				<br>
+				<label for="dc">DC :{{.Roles.DC}}</label>
+				<select name="dc">
+					{{range $key, $dc := .DCs}}
+					<option value="{{$dc.Name}}" >{{$dc.LongName}}</option>
+					{{end}}
+				</select>
+				<br>
+			</p>
+      <INPUT type="checkbox" name="devrole" value="yes" {{if .Roles.DevRole}}checked{{end}}> Dev Role
+      <INPUT type="checkbox" name="rmrole" value="yes" {{if .Roles.RmRole }}checked{{end}}> Rm Role
+      <INPUT type="checkbox" name="opsrole" value="yes" {{if .Roles.OpsRole }}checked{{end}}> Ops Role
+      <INPUT type="checkbox" name="admrole" value="yes" {{if .Roles.AdmRole }}checked{{end}}> Adm Role
+      <br>
+			<input type="submit" value="Update">
+		</form>
+			<p> <a href="/">HomePage !</a> </p>
+	</div>
+</body>
+</html>
+{{end}}

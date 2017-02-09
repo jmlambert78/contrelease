@@ -1,0 +1,40 @@
+{{define "selectuser"}}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+  	<title> Select User to update its roles </title>
+  	<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+<H2 >	List of declared Users </H2>
+<table style="width:50%" border =2>
+<tr><th>Username</th><th>Actions</th></tr>
+{{range $key, $u := .Users}}
+<tr><td align="center">{{$u.Name}} </td>
+  <td align="center"> <a href="/editrole?name={{$u.Name}}">Edit!</a> <a href="/deleteuser?name={{$u.Name}}">Delete!</a></td>
+
+</tr>
+{{end}}
+</table>
+<H2 >	List of declared Roles </H2>
+<table style="width:50%" border =2>
+<tr><th>Username</th><th>DC</th><th>Dev</th><th>RM</th><th>Ops</th><th>Adm</th><th>SuperAdm</th><th>Actions</th></tr>
+{{range $key, $r := .Roles}}
+<tr>
+  <td align="center">{{$r.UserName}} </td>
+  <td align="center"> {{$r.DC}}</td>
+  <td align="center"> {{$r.DevRole}}</td>
+  <td align="center"> {{$r.RmRole}}</td>
+  <td align="center"> {{$r.OpsRole}}</td>
+  <td align="center"> {{$r.AdmRole}}</td>
+  <td align="center"> {{$r.SuperAdmRole}}</td>
+  <td align="center"> <a href="/editrole?name={{$r.UserName}}">Edit!</a></td>
+</tr>
+{{end}}
+</table>
+
+<p> <a href="/">HomePage !</a> </p>
+</body>
+</html>
+{{end}}

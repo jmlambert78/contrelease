@@ -1,0 +1,45 @@
+{{define "listdcs"}}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+  	<title> Datacenters </title>
+  	<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+<H2 >	List of declared Datacenters & default value for repos </H2>
+<table style="width:50%" border =2>
+<tr><th>Datacenter</th><th>RegistryURL</th><th>ZipRepoURL</th><th>Actions</th></tr>
+{{range $key, $dc := .Results}}
+<tr><td align="center">{{$dc.Name}} </td>
+  <td align="center"> {{$dc.RegUrl}}</td>
+  <td align="center"> {{$dc.ZipRepoUrl}}</td>
+  <td align="center"> <a href="/deletedc?name={{$dc.Name}}">Delete!</a><a href="/updatedc?name={{$dc.Name}}">Update!</a></td>
+
+</tr>
+{{end}}
+</table>
+<H2> To add a new DC </H2>
+<div class="centre">
+
+  <form method="post" action="/adddc">
+    <p>
+      <label for="name">DC Name</label>
+      <input type="text" name="name" />
+      <br>
+      <label for="lname">DC Name</label>
+      <input type="text" name="lname" />
+      <br>
+      <label for="regurl">Local Registry Url :</label>
+      <input type="URL" name="regurl" />
+      <br>
+      <label for="ziprepo">Local Zip Repo Url :</label>
+      <input type="text" name="ziprepo" />
+      <br>
+    </p>
+    <input type="submit" value="Add">
+  </form>
+<p> <a href="/">HomePage !</a> </p>
+</body>
+</html>
+{{end}}

@@ -1,0 +1,13 @@
+{{define "success"}}
+<!doctype html>
+<html lang="en">
+<body>
+  {{if .Success}}
+  <p>Service successfully created</p>
+  {{else}}
+  <p>Service NOT created</p>
+  {{end}}
+  <p> <a href="/">HomePage !</a> </p>
+</body>
+</html>
+{{end}}

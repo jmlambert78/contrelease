@@ -1,0 +1,27 @@
+{{define "signup"}}
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title> Continous Release Sign up page </title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+	<div class="centre">
+		<h2>Please enter your registration data : </h2>
+		<form method="get" action="/signupfill">
+			<p>
+				<label for="Name">Login :</label>
+				<input type="text" name="Name" />
+				<br>
+				<label for="Pass">Password :</label>
+				<input type="password" name="Pass" />
+				<br>
+			</p>
+			<input type="submit" value="Register">
+		</form>
+			<p> <a href="/">HomePage !</a> </p>
+	</div>
+</body>
+</html>
+{{end}}

@@ -1,0 +1,34 @@
+{{define "updatedc"}}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+  	<title> Update Datacenter </title>
+  	<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+</table>
+<H2> To Update a new DC </H2>
+<div class="centre">
+
+  <form method="GET" action="/updatedcput">
+    <p>
+      <label for="name">DC Name</label>
+      <input type="text" name="name" value="{{.Result.Name}}" />
+      <br>
+      <label for="lname">DC Name</label>
+      <input type="text" name="lname" value="{{.Result.LongName}}" />
+      <br>
+      <label for="regurl">Local Registry Url :</label>
+      <input type="URL" name="regurl" value="{{.Result.RegUrl}}"/>
+      <br>
+      <label for="ziprepo">Local Zip Repo Url :</label>
+      <input type="text" name="ziprepo" value="{{.Result.ZipRepoUrl}}"/>
+      <br>
+    </p>
+    <input type="submit" value="Update">
+  </form>
+p> <a href="/">HomePage !</a> </p>
+</body>
+</html>
+{{end}}

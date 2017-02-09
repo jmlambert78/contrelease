@@ -1,0 +1,47 @@
+{{define "newrelease"}}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+  	<title> New Releases </title>
+  	<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+<H2 >	Create a new Release Manually (for demo)</H2>
+	<div class="centre">
+		<h2>Please enter your Release data : </h2>
+		<form method="post" action="/newrelease">
+			<p>
+				<label for="sname">ServiceName :</label>
+				<input type="text" name="sname" />
+				<br>
+				<label for="svers">Service Version :</label>
+				<input type="text" name="svers" />
+				<br>
+        <label for="cimage">Docker Image URL:</label>
+				<input type="text" name="cimage" />
+				<br>
+        <label for="zipurl">ZIP Delivery Package URL:</label>
+				<input type="text" name="zipurl" />
+				<br>
+        <label for="limage">Local docker image URL:</label>
+        <input type="text" name="limage" />
+        <br>
+        <label for="dest">Destination DC : </label>
+				<select name="dest">
+					{{range $key, $dc := .DCs}}
+					<option value="{{$dc.Name}}" >{{$dc.LongName}}</option>
+					{{end}}
+				</select>
+			</p>
+			<input type="submit" value="Register">
+		</form>
+			<p> <a href="/">HomePage !</a> </p>
+	</div>
+</body>
+
+  <p> <a href="/">HomePage !</a> </p>
+  </body>
+	</html>
+{{end}}

@@ -1,0 +1,43 @@
+{{define "releases"}}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+  	<title> List of {{.AllReleases}} Releases for {{.Destination}} </title>
+  	<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+<H2 >	Datacenter Target : {{.Destination}} (<b> {{len .Results}}</b> releases) </H2>
+<table style="width:50%" border =2>
+<tr><th>Service</th><th>Version</th><th>Released ?</th><th>ZipURL</th><th>CentralImgURL</th><th>LocImgURL</th><th>Date</th></tr>
+{{$toto := .Roles.RmRole}}
+{{range $key, $release := .Results}}
+<tr><td align="center">{{$release.ServiceName}} </td>
+    <td align="center"> {{$release.ServiceVersion}}</td>
+    <td align="center"> {{if $release.ReleaseStatus}}YES{{else}}NO
+      {{if $toto}}
+        <a href="/validrm?dest={{.Destination}}&id={{$release.Id}}&sname={{$release.ServiceName}}&svers={{$release.ServiceVersion}}">Click to Release!</a>
+      {{end}}
+      {{end}}</td>
+    <td align="center"> {{$release.CentralZipURL}} </td>
+    <td align="center"> {{$release.CentralImage}} </td>
+    <td align="center"> {{$release.LocalImage}} </td>
+    <td align="center"> {{$release.InsertDate}} </td>
+</tr>
+{{end}}
+
+</table>
+  {{if ne .AllReleases "ALL"}}
+    {{if .Results}}
+      <H2><a href="/getscript?dest={{.Destination}}">Click here to get your synchro script !</a></H2>
+      <H2><a href="/getscript?dest={{.Destination}}&option=viewonly">Click here to View your synchro script !</a></H2>
+    {{else}}
+      <H2>No release available for your {{.Destination}} </H2>
+    {{end}}
+  {{end}}
+
+  <p> <a href="/">HomePage !</a> </p>
+  </body>
+	</html>
+{{end}}

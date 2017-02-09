@@ -1,0 +1,35 @@
+{{define "index"}}
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title> Login page </title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+	<div class="centre">
+		<h2>Welcome to Continuous Release Demo.</h2>
+
+		{{if .Success}}
+    <p> New User created, you can log in ! </p>
+    {{end}}
+
+		<form method="get" action="/checklogin">
+			<p>
+				<label for="login">Login :</label>
+				<input type="text" name="login" />
+				<br />
+				<label for="password">Password :</label>
+				<input type="password" name="password" />
+			</p>
+			<input type="submit" value="Log In">
+		</form>
+		{{if not .Valid}}
+				<p> User or password is not correct ! Please try again ! </p>
+		{{end}}
+
+		<p> <a href="/">HomePage !</a> <a href="/signup"> Click here to SIGN UP !</a></p>
+	</div>
+</body>
+</html>
+{{end}}

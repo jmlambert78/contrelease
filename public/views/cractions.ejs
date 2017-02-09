@@ -1,0 +1,152 @@
+{{define "cractions"}}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title> Continuous Release : Welcome {{.Username}} </title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<style>
+body {font-family: "Lato", sans-serif;}
+
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+</style>
+<body>
+
+<H2>Welcome to the Continuous Release Demonstrator !</H2> <a href="/">HomePage !</a>
+
+</table>
+<H2 >	List of your declared Roles</H2>
+<table style="width:50%" border =2>
+<tr><th>Username</th><th>DC</th><th>Dev</th><th>RM</th><th>Ops</th><th>Adm</th><th>SuperAdm</th><th>Actions</th></tr>
+{{if .Roles}}
+<tr>
+  <td align="center">{{.Roles.UserName}} </td>
+  <td align="center"> {{.Roles.DC}}</td>
+  <td align="center"> {{.Roles.DevRole}}</td>
+  <td align="center"> {{.Roles.RmRole}}</td>
+  <td align="center"> {{.Roles.OpsRole}}</td>
+  <td align="center"> {{.Roles.AdmRole}}</td>
+  <td align="center"> {{.Roles.SuperAdmRole}}</td>
+  <td align="center"> <a href="/editrole?name={{.Roles.UserName}}">Edit!</a></td>
+</tr>
+{{end}}
+</table>
+
+<ul class="tab">
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Publish')">Publish</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'ApproveRelease')">Approve Release</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'ReleasesDC')">Releases for DC</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'ManageDC')">Manage DC</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'ManageUsers')">Manage Users</a></li>
+</ul>
+
+<div id="Publish" class="tabcontent">
+	<h3>Publish</h3>
+	<p>Publish is the capital city of England.</p>
+	<H1> Continuous Release : </H1>
+	<H2>Welcome {{.Username}}</H2>
+	<H3>Add a new service </H3>
+	To Add a new service delivery package, you must <b>POST</b> a document to the <b>/newrelease</b> url
+	  <pre>
+	  {
+		"sname":"ota",
+		"svers":"34",
+		"dest":"TDC",
+		"zipurl":"https://zipurl/ota34.zip",
+		"cimage":"dockerhub.gemalto.com:8500/ota/ota33:34",
+		"limage":"tdchub.gemalto.com:1230/ota/ota33:34"
+	}
+	</pre>
+	You may use postman to make it or fill the form below :
+  <iframe width="100%" height="400" src="/addnewrelease" frameborder="2" ></iframe>
+	<p>NB: if you omit the limage field, the application will generate the limage path from the DC default registry url
+	<p>For the Zip destination, this is done by default for the moment
+</div>
+
+<div id="ApproveRelease" class="tabcontent">
+	<h3>Approve</h3>
+	<H3>List all available services for your Target </H3>
+	<p>NB: Inside this page, the <b>ReleaseMgr</b> will be able to RELEASE officially the package.
+<iframe width="100%" height="400" src="/getallreleases?dest={{.Roles.DC}}" frameborder="2" ></iframe>
+</div>
+
+<div id="ReleasesDC" class="tabcontent">
+	<H3>List all RELEASED services for your Target </H3>
+  <iframe width="100%" height="400" src="/getvalidreleases?dest={{.Roles.DC}}" frameborder="2" ></iframe>
+	<H3>Get the shell script allowing the download of all RELEASED services for your Target </H3>
+
+
+</div>
+<div id="ManageDC" class="tabcontent">
+	<p>Here the principle is that in case no local image or repo path is provided,
+	<p>the application will replace the dockerhub.gemalto.com:xxx by the default value of the local registry within the generated scripts.(but will not update the ZIP content)
+	<P>As well, for the zip repo, it will copy to the default target directory.
+  <iframe width="100%" height="400" src="/listdcs" frameborder="2" ></iframe>
+</div>
+
+<div id="ManageUsers" class="tabcontent">
+	<p>Each user may have several roles on a DC,
+	<p>Only the superadmin has access to all DCs and can modify the roles.
+  <iframe width="100%" height="400" src="/manageroles" frameborder="2" ></iframe>
+
+</div>
+<script>
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
+
+</body>
+</html>
+{{end}}

@@ -1,0 +1,8 @@
+{
+  "sname":"ota",
+  "svers":"33",
+  "dest":"TDC",
+  "zipurl":"http://zipurl/ota33.zip",
+  "cimage":"http://dockerhub.gemalto.com:ota33:33",
+  "limage":"http://tdchub.gemalto.com:ota33:33"
+	}
