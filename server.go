@@ -18,33 +18,31 @@ func main() {
 
 	// Database initialisation
 	db.DbMain()
-	// Routes
+	// Routes for Signup, login, user & role management
 	e.GET("/", routes.Home)
-	//e.GET("/login", routes.Login)
 	e.GET("/signup", routes.Signup)
 	e.GET("/signupfill", routes.SignupFilled)
 	e.GET("/checklogin", routes.CheckLogin)
 	e.GET("/deleteuser", routes.DeleteUser)
-
+	e.GET("/manageroles", routes.ManageUsersRoles)
+	e.GET("/editrole", routes.EditUserRoles)
+	e.GET("/validateuserrole", routes.UpdateUserRoles)
+	
+	// Routes for Releases management
 	e.GET("/addnewrelease", routes.AddNewRelease)
 	e.POST("/newrelease", routes.NewRelease)
 	e.GET("/getallreleases", routes.GetAllReleases)
 	e.GET("/getalldcsreleases", routes.GetAllDCReleases)
-
 	e.GET("/getvalidreleases", routes.GetValidReleases)
 	e.GET("/validrm", routes.ValidateRelease)
 	e.GET("/getscript", routes.GetScript)
 
-	// Mgt of Orgs & URL/Repos default paths
+	// Mgt of DCs & URL/Repos default paths
 	e.POST("/adddc", routes.AddDc)
 	e.GET("/listdcs", routes.ListDcs)
 	e.GET("/deletedc", routes.DeleteDc)
 	e.GET("/updatedc", routes.GetUpdateDc)
 	e.GET("/updatedcput", routes.PutUpdateDc)
-
-	e.GET("/manageroles", routes.ManageUsersRoles)
-	e.GET("/editrole", routes.EditUserRoles)
-	e.GET("/validateuserrole", routes.UpdateUserRoles)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))
