@@ -6,5 +6,5 @@ USER myuser
 WORKDIR /home/myuser
 
 ADD main main
-EXPOSE 1323
+EXPOSE 8080
 ENTRYPOINT ["./main"]
