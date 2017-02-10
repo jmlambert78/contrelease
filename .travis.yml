@@ -1,0 +1,9 @@
+language: go
+sudo: required
+services:
+- docker
+env:
+- DOCKER_IMAGE_NAME="contrel:$TRAVIS_BUILD_NUMBER"
+
+script: go build -o main
+
