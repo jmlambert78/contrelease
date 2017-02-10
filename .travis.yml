@@ -3,7 +3,7 @@ sudo: required
 services:
 - docker
 addons:
-  ssh_known_hosts: 46.38.251.201
+  ssh_known_hosts: 45.55.245.117
 env:
 - DOCKER_IMAGE_NAME="jmlambert78/contrel:$TRAVIS_BUILD_NUMBER"
 
