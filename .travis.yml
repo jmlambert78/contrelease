@@ -2,8 +2,15 @@ language: go
 sudo: required
 services:
 - docker
+addons:
+  ssh_known_hosts: 45.55.245.117
 env:
-- DOCKER_IMAGE_NAME="contrel:$TRAVIS_BUILD_NUMBER"
+- DOCKER_IMAGE_NAME="jmlambert78/contrel:$TRAVIS_BUILD_NUMBER"
 
 script: go build -o main
+
+after_success:
+- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" 
+- docker build -t $DOCKER_IMAGE_NAME .
+- docker push $DOCKER_IMAGE_NAME
 
