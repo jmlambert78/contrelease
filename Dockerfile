@@ -6,5 +6,6 @@ USER myuser
 WORKDIR /home/myuser
 
 ADD main main
+ADD public public
 EXPOSE 8080
 ENTRYPOINT ["./main"]
