@@ -8,7 +8,6 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
-
 func main() {
 	//proxyUrl, _ := url.Parse("http://localhost:5000")
 	//http.DefaultTransport = &http.Transport{Proxy: http.ProxyURL(proxyUrl)}
