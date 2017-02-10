@@ -14,10 +14,10 @@
 				<label for="name">Login :</label>
 				<input type="text" name="name" value="{{.Roles.UserName}}"/>
 				<br>
-				<label for="dc">DC :{{.Roles.DC}}</label>
+				<label for="dc">DC :</label>
 				<select name="dc">
 					{{range $key, $dc := .DCs}}
-					<option value="{{$dc.Name}}" >{{$dc.LongName}}</option>
+					<option value="{{$dc.Name}}" {{if eq $dc.Name $.Roles.DC}}selected="selected"{{end}}>{{$dc.LongName}}</option>
 					{{end}}
 				</select>
 				<br>

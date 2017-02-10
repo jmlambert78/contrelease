@@ -3,7 +3,7 @@ package db
 import "gopkg.in/mgo.v2"
 
 const (
-	Host         = "mongodb://45.55.245.117:27017"
+	Host         = "mongodb://localhost,45.55.245.117:27017"
 	Database     = "contrel"
 	AuthDatabase = "authdb"
 	AuthUserName = "root"
