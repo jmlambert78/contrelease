@@ -8,15 +8,15 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
+
 func main() {
-	
+
 	e := echo.New()
 	e.Renderer = views.Init()
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	
 	// Database initialisation
 	db.DbMain()
 	// Routes for Signup, login, user & role management
@@ -28,7 +28,7 @@ func main() {
 	e.GET("/manageroles", routes.ManageUsersRoles)
 	e.GET("/editrole", routes.EditUserRoles)
 	e.GET("/validateuserrole", routes.UpdateUserRoles)
-	
+
 	// Routes for Releases management
 	e.GET("/addnewrelease", routes.AddNewRelease)
 	e.POST("/newrelease", routes.NewRelease)

@@ -125,6 +125,7 @@ func GetAllDCReleases(c echo.Context) error {
 		valid = http.StatusOK
 		fmt.Println("OK Releases found", results)
 	}
+	checkAllZipImages(results)
 	cookie, _ := c.Cookie("username")
 	fmt.Println("cookie", cookie.Value, getUserRole(c, cookie.Value))
 	return c.Render(valid, "releases", struct {
