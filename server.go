@@ -16,6 +16,7 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	
 	// Database initialisation
 	db.DbMain()
 	// Routes for Signup, login, user & role management
