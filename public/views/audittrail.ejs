@@ -1,0 +1,31 @@
+{{define "audittrails"}}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+  	<title> Audit Trails : Activity logs </title>
+  	<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+<H2 >	Audit Trails : Activity logs </H2>
+<table style="width:100%" border =2>
+<tr><th>Date</th><th>Who</th><th>Action</th><th>Status</th><th>DC</th><th>Service</th><th>Version</th><th>Released?</th></tr>
+{{range $key, $atrail := .Results}}
+<tr>
+  <td align="center">{{$atrail.EventDate}} </td>
+  <td align="center">{{$atrail.Who}} </td>
+  <td align="center">{{$atrail.Action}} </td>
+  <td align="center">{{$atrail.Status}} </td>
+  <td align="center">{{$atrail.Release.Destination}} </td>
+  <td align="center">{{$atrail.Release.ServiceName}} </td>
+  <td align="center">{{$atrail.Release.ServiceVersion}} </td>
+  <td align="center">{{$atrail.Release.ReleaseStatus}} </td>
+
+</tr>
+{{end}}
+</table>
+
+<p> <a href="/">HomePage !</a> </p>
+</body>
+</html>
+{{end}}
