@@ -33,6 +33,41 @@ func NewRelease(c echo.Context) error {
 	}
 	r.InsertDate = time.Now()
 	r.ReleaseStatus = false // default value for a new inserted release
+
+	// Check if the ZIP file exists and extract Central & LocalImage URLs
+	err, imageName, refImageName := CheckZipURLForImage(r.CentralZipURL)
+	fmt.Println("Check the zip content : Err:", err, "Found Localimage: ", imageName, "refImage:", refImageName)
+	if err == nil {
+		r.CentralImage = refImageName
+		r.LocalImage = imageName
+	}
+	Db := db.MgoDb{}
+	Db.Init()
+	defer Db.Close()
+	col := Db.C("release")
+	// Insert
+	valid := true
+	if err := col.Insert(&r); err != nil {
+		valid = false
+		fmt.Println("NOK Not Inserted")
+	} else {
+		valid = true
+		//c.JSON(http.StatusOK, "OK")
+		fmt.Println("OK Inserted")
+	}
+
+	return c.Render(http.StatusOK, "success", struct {
+		Valid   bool
+		Success bool
+	}{true, valid})
+}
+func NewReleaseSave(c echo.Context) error {
+	r := &models.Release{}
+	if err := c.Bind(r); err != nil {
+		return err
+	}
+	r.InsertDate = time.Now()
+	r.ReleaseStatus = false // default value for a new inserted release
 	// Process the URLs for registries
 	if strings.Index(r.CentralImage, "://") < 0 {
 		r.CentralImage = "https://" + r.CentralImage
