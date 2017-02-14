@@ -82,11 +82,11 @@ ul.tab li a:focus, .active {
   {{if .Roles.SuperAdmRole}}
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'SuperAdmin')">SuperADM Panel</a></li>
   {{end}}
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'AuditTrail')">Audit Trails</a></li>
 </ul>
 
 <div id="Publish" class="tabcontent">
 	<h3>Publish</h3>
-	<p>Publish is the capital city of England.</p>
 	<H1> Continuous Release : </H1>
 	<H2>Welcome {{.Username}}</H2>
 	<H3>Add a new service </H3>
@@ -96,11 +96,24 @@ ul.tab li a:focus, .active {
 		"sname":"ota",
 		"svers":"34",
 		"dest":"TDC",
-		"zipurl":"https://dockerhub.gemalto.com/repository/docker-delivery/risk-engine/re-cci/1.1.1.0-670/re-cci-1.1.1.0-670.zip",
-		"cimage":"dockerhub.gemalto.com/risk-engine/re-cci:1.1.1.0-670",
-		"limage":"tdchub.gemalto.com:1230/risk-engine/re-cci:1.1.1.0-670"
+		"zipurl":"https://dockerhub.gemalto.com/repository/docker-delivery/risk-engine/re-cci/1.1.1.0-670/re-cci-1.1.1.0-670.zip"
 	}
 	</pre>
+  <p>The assumption is that the YAML file contains the target local image url and the RefImage URL in central registry like : </p>
+  <pre>
+    template:
+      metadata:
+        labels:
+          component: "re-cci"
+          version: "1.1.1.0-670"
+          project: "risk-engine"
+          refimage: "dockerhub.gemalto.com/risk-engine/re-cci:1.1.1.0-670"
+      spec:
+        containers:
+          -
+            name: "re-cci"
+            image: "dockerhub.gemalto.com/risk-engine/re-cci:1.1.1.0-670"
+  </pre>
 	You may use postman to make it or fill the form below :
   <iframe width="100%" height="400" src="/addnewrelease" frameborder="2" ></iframe>
 	<p>NB: if you omit the limage field, the application will generate the limage path from the DC default registry url
@@ -138,6 +151,18 @@ ul.tab li a:focus, .active {
   <iframe width="100%" height="400" src="/getalldcsreleases" frameborder="2" ></iframe>
 	<H3>Get the shell script allowing the download of all RELEASED services for your Target </H3>
 </div>
+<div id="AuditTrail" class="tabcontent">
+	<h3>Audit Trails</h3>
+	<H1> Continuous Release : </H1>
+	<H2>Welcome {{.Username}}</H2>
+	<H3>You will find here all the logs, audits of the publish & pull activity performed  </H3>
+
+	You may use postman to make it or fill the form below :
+  <iframe width="100%" height="400" src="/addnewrelease" frameborder="2" ></iframe>
+	<p>NB: if you omit the limage field, the application will generate the limage path from the DC default registry url
+	<p>For the Zip destination, this is done by default for the moment
+</div>
+
 <script>
 function openCity(evt, cityName) {
     var i, tabcontent, tablinks;

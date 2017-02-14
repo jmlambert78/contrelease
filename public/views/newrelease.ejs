@@ -19,15 +19,9 @@
 				<label for="svers">Service Version :</label>
 				<input type="text" name="svers" />
 				<br>
-        <label for="cimage">Docker Image URL:</label>
-				<input type="text" name="cimage" />
-				<br>
         <label for="zipurl">ZIP Delivery Package URL:</label>
 				<input type="text" name="zipurl" />
 				<br>
-        <label for="limage">Local docker image URL:</label>
-        <input type="text" name="limage" />
-        <br>
         <label for="dest">Destination DC : </label>
 				<select name="dest">
 					{{range $key, $dc := .DCs}}
