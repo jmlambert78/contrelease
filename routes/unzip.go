@@ -14,7 +14,7 @@ import (
 	"github.com/jmlambert78/contrelease/models"
 )
 
-func GetImageFromYamlInZip(file string) string {
+func GetImagesFromYamlInZip(file string) (string, string) {
 	// Open a zip archive for reading.
 	r, err := zip.OpenReader(file)
 	if err != nil {
@@ -22,6 +22,7 @@ func GetImageFromYamlInZip(file string) string {
 	}
 	defer r.Close()
 	imageName := ""
+	refImageName := ""
 	// Iterate through the files in the archive,
 	// printing some of their contents.
 	var validYAML = regexp.MustCompile(`^[^/]+\.yaml$`)
@@ -37,12 +38,17 @@ func GetImageFromYamlInZip(file string) string {
 				log.Fatal(err)
 			}
 			var validImageLine = regexp.MustCompile(`image:`)
+			var validRefImageLine = regexp.MustCompile(`refimage:`)
 			// create a new scanner and read the file line by line
 			scanner := bufio.NewScanner(rc)
 			for scanner.Scan() {
 				if validImageLine.MatchString(scanner.Text()) {
 					a := strings.Split(scanner.Text(), "\"")
 					imageName = a[1]
+				}
+				if validRefImageLine.MatchString(scanner.Text()) {
+					a := strings.Split(scanner.Text(), "\"")
+					refImageName = a[1]
 				}
 			}
 			// check for errors
@@ -52,7 +58,7 @@ func GetImageFromYamlInZip(file string) string {
 		}
 	}
 	// Output:
-	return imageName
+	return imageName, refImageName
 }
 func DownloadFromUrl(url string) (error, string) {
 	tokens := strings.Split(url, "/")
@@ -83,24 +89,24 @@ func DownloadFromUrl(url string) (error, string) {
 	fmt.Println(n, "bytes downloaded.")
 	return err, fileName
 }
-func CheckZipURLForImage(url string) (error, string) {
+func CheckZipURLForImage(url string) (error, string, string) {
 	//_, fileName := routes.DownloadFromUrl("https://dockerhub.gemalto.com/repository/docker-delivery/risk-engine/re-cci/1.1.1.0-670/re-cci-1.1.1.0-670.zip")
 	imageName := ""
 	err, fileName := DownloadFromUrl(url)
 	if err == nil {
-		imageName = GetImageFromYamlInZip(fileName)
-		fmt.Println(imageName)
+		imageName, refImageName = GetImagesFromYamlInZip(fileName)
+		fmt.Println(imageName, refImageName)
 	}
-	return err, imageName
+	return err, imageName, refImageName
 }
 func checkAllZipImages(releases []models.Release) {
 	for i, r := range releases {
-		err, imageName := CheckZipURLForImage(r.CentralZipURL)
+		err, imageName, refImageName := CheckZipURLForImage(r.CentralZipURL)
 		fmt.Println("Err:", err, "image:", imageName)
 		if err != nil {
 			releases[i].CentralZipURL = releases[i].CentralZipURL + "(ERROR)"
 		} else {
-			releases[i].CentralImage = releases[i].CentralImage + "\n" + imageName
+			releases[i].CentralImage = releases[i].CentralImage + "\n" + imageName + "\n" + refImageName
 		}
 	}
 }
