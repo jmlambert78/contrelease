@@ -44,7 +44,8 @@ func main() {
 	e.GET("/deletedc", routes.DeleteDc)
 	e.GET("/updatedc", routes.GetUpdateDc)
 	e.GET("/updatedcput", routes.PutUpdateDc)
-
+	// Get the Audit trails logs
+	e.GET("/getaudittrail", routes.GetAuditTrails)
 	// Start server
 	e.Logger.Fatal(e.Start(":8080"))
 }

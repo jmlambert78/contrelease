@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"net/url"
-	"strings"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
@@ -56,62 +54,7 @@ func NewRelease(c echo.Context) error {
 		//c.JSON(http.StatusOK, "OK")
 		fmt.Println("OK Inserted")
 	}
-
-	return c.Render(http.StatusOK, "success", struct {
-		Valid   bool
-		Success bool
-	}{true, valid})
-}
-func NewReleaseSave(c echo.Context) error {
-	r := &models.Release{}
-	if err := c.Bind(r); err != nil {
-		return err
-	}
-	r.InsertDate = time.Now()
-	r.ReleaseStatus = false // default value for a new inserted release
-	// Process the URLs for registries
-	if strings.Index(r.CentralImage, "://") < 0 {
-		r.CentralImage = "https://" + r.CentralImage
-	}
-	uc, err := url.Parse(r.CentralImage)
-	if err != nil {
-		panic(err)
-	}
-	r.CentralImage = uc.Host + uc.Path // update and remove header name.
-	if strings.Index(r.LocalImage, "://") < 0 {
-		r.LocalImage = "https://" + r.LocalImage
-	}
-	ul, err := url.Parse(r.LocalImage)
-	if err != nil {
-		panic(err)
-	}
-	Db := db.MgoDb{}
-	Db.Init()
-	defer Db.Close()
-	col := Db.C("dcs")
-	if len(ul.Path) <= 0 {
-		// need to create an url from the default DC URLs
-		var results models.Datacenter
-		if err := col.Find(bson.M{"name": r.Destination}).One(&results); err != nil {
-			fmt.Println("NOK DC Not found")
-		} else {
-			fmt.Println("OK DC found", results)
-			r.LocalImage = results.RegUrl + uc.Path
-		}
-	}
-
-	col = Db.C("release")
-	// Insert
-	valid := true
-	if err := col.Insert(&r); err != nil {
-		valid = false
-		fmt.Println("NOK Not Inserted")
-	} else {
-		valid = true
-		//c.JSON(http.StatusOK, "OK")
-		fmt.Println("OK Inserted")
-	}
-
+	_ = InsertAudit("REST", "Insert Release", *r, valid)
 	return c.Render(http.StatusOK, "success", struct {
 		Valid   bool
 		Success bool
@@ -242,6 +185,12 @@ func GetScript(c echo.Context) error {
 	if err != nil {
 		panic(err)
 	}
+	// Get Username
+	cookie, _ := c.Cookie("username")
+	// get the release validated.
+	for _, element := range results {
+		_ = InsertAudit(cookie.Value, "Get Script for Release", element, true)
+	}
 	var doc bytes.Buffer
 	err = tmpl.Execute(&doc, struct {
 		Destination string
@@ -276,6 +225,16 @@ func ValidateRelease(c echo.Context) error {
 	err := col.Update(colQuerier, change)
 	if err != nil {
 		panic(err)
+	}
+	// Get Username
+	cookie, _ := c.Cookie("username")
+	// get the release validated.
+	var results models.Release
+	if err := col.Find(colQuerier).One(&results); err != nil {
+		fmt.Println("NOK releases Not found")
+	} else {
+		_ = InsertAudit(cookie.Value, "Validate Release", results, true)
+		fmt.Println("OK Releases found", results)
 	}
 	return GetAllReleases(c)
 }
