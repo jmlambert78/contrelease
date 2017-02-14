@@ -7,7 +7,7 @@
   	<link rel="stylesheet" href="style.css">
   </head>
   <body>
-<H2 >	Audit Trails : Activity logs </H2>
+<H2 >	Audit Trails : Activity logs </H2> <input type="button" value="Refresh Page" onClick="location.reload()">
 <table style="width:100%" border =2>
 <tr><th>Date</th><th>Who</th><th>Action</th><th>Status</th><th>DC</th><th>Service</th><th>Version</th><th>Released?</th></tr>
 {{range $key, $atrail := .Results}}

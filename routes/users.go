@@ -67,12 +67,6 @@ func SignupFilled(c echo.Context) error {
 	}{true, valid})
 }
 
-func Login(c echo.Context) error {
-	return c.Render(http.StatusOK, "login", struct {
-		Valid   bool
-		Success bool
-	}{true, true})
-}
 func CheckLogin(c echo.Context) error {
 	//u := &models.User{}
 	fmt.Println(c.FormValue("login"))
@@ -104,15 +98,17 @@ func CheckLogin(c echo.Context) error {
 		cookie.Expires = time.Now().Add(24 * time.Hour)
 		c.SetCookie(cookie)
 		fmt.Println("cookie", cookie.Name, cookie.Value)
-	}
-	roles := getUserRole(c, result.Name)
-	return c.Render(http.StatusOK, "cractions", struct {
-		Valid    bool
-		Success  bool
-		Username string
-		Roles    models.Roles
-	}{valid, true, result.Name, roles})
 
+		roles := getUserRole(c, result.Name)
+		return c.Render(http.StatusOK, "cractions", struct {
+			Valid    bool
+			Success  bool
+			Username string
+			Roles    models.Roles
+		}{valid, true, result.Name, roles})
+	} else {
+		return Home(c)
+	}
 }
 func getUsers(c echo.Context) []models.User {
 	Db := db.MgoDb{}

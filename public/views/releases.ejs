@@ -8,8 +8,8 @@
   </head>
   <body>
 
-<H2 >	Datacenter Target : {{.Destination}} (<b> {{len .Results}}</b> releases) </H2>
-<table style="width:50%" border =2>
+<H2 >	Datacenter Target : {{.Destination}} (<b> {{len .Results}}</b> releases) </H2><input type="button" value="Refresh Page" onClick="location.reload()">
+<table style="width:80%" border =2>
 <tr><th>DC</th><th>Service</th><th>Version</th><th>Released ?</th><th>ZipURL</th><th>CentralImgURL</th><th>LocImgURL</th><th>Date</th></tr>
 {{$toto := .Roles.RmRole}}
 {{range $key, $release := .Results}}
@@ -25,6 +25,7 @@
     <td align="center"> {{$release.CentralZipURL}} </td>
     <td align="center"> {{$release.CentralImage}} </td>
     <td align="center"> {{$release.LocalImage}} </td>
+
     <td align="center"> {{$release.InsertDate}} </td>
 </tr>
 {{end}}
