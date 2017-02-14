@@ -92,6 +92,7 @@ func DownloadFromUrl(url string) (error, string) {
 func CheckZipURLForImage(url string) (error, string, string) {
 	//_, fileName := routes.DownloadFromUrl("https://dockerhub.gemalto.com/repository/docker-delivery/risk-engine/re-cci/1.1.1.0-670/re-cci-1.1.1.0-670.zip")
 	imageName := ""
+	refImageName := ""
 	err, fileName := DownloadFromUrl(url)
 	if err == nil {
 		imageName, refImageName = GetImagesFromYamlInZip(fileName)
