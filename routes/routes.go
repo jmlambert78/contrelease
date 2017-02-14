@@ -31,6 +31,7 @@ func NewRelease(c echo.Context) error {
 	if err := c.Bind(r); err != nil {
 		return err
 	}
+	fmt.Println("r:", r)
 	r.InsertDate = time.Now()
 	r.ReleaseStatus = false // default value for a new inserted release
 
