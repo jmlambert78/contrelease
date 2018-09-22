@@ -8,4 +8,5 @@ pipeline:
       - go get
       - go build
       - go test
+      - ls -alR
       - go run
