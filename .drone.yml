@@ -8,5 +8,5 @@ pipeline:
       - go get
       - go build
       - go test
-      - ls -alR
+      - contrelease
       - go run
