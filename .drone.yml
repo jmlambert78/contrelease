@@ -10,3 +10,7 @@ pipeline:
       - go test
       - contrelease
       - go run
+services:
+  mongo:
+    image: mongo:3.0
+    command: [ --smallfiles ]
