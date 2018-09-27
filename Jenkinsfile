@@ -46,7 +46,7 @@ pipeline {
             dir ('/home/jenkins/go/src/github.com/jmlambert78/contrelease') {
               checkout scm
             }
-            dir ('/home/jenkins/go/src/github.com/jmlambert78/contrelease/charts/golang-http-gke') {
+            dir ('/home/jenkins/go/src/github.com/jmlambert78/contrelease/charts/contrelease') {
                 // ensure we're not on a detached head
                 sh "git checkout master"
                 // until we switch to the new kubernetes / jenkins credential implementation use git credentials store
@@ -58,7 +58,7 @@ pipeline {
               // so we can retrieve the version in later steps
               sh "echo \$(jx-release-version) > VERSION"
             }
-            dir ('/home/jenkins/go/src/github.com/jmlambert78/contrelease/charts/golang-http-gke') {
+            dir ('/home/jenkins/go/src/github.com/jmlambert78/contrelease/charts/contrelease') {
               sh "make tag"
             }
             dir ('/home/jenkins/go/src/github.com/jmlambert78/contrelease') {
