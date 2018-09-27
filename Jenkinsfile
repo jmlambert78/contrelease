@@ -77,7 +77,7 @@ pipeline {
           branch 'master'
         }
         steps {
-          dir ('/home/jenkins/go/src/github.com/jmlambert78/contrelease/charts/golang-http-gke') {
+          dir ('/home/jenkins/go/src/github.com/jmlambert78/contrelease/charts/contrelease') {
             container('go') {
               sh 'jx step changelog --version v\$(cat ../../VERSION)'
 
